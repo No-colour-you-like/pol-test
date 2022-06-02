@@ -4,6 +4,7 @@ import urlSerialize from "../../utils/urlSerialize";
 const SET_USERS = "SET_USERS";
 const SET_DELETE_USER = "SET_DELETE_USER";
 const SORT_USERS = "SORT_USERS";
+const ADD_NEW_USER = "ADD_NEW_USER";
 
 const INITIAL_STATE = {
   users: []
@@ -17,11 +18,17 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         users: action.payload
       };
     case SET_DELETE_USER:
-      const users = state.users.filter((user) => {
-        return user.id !== action.payload.id;
+      const filteredUsers = state.users.filter((user) => {
+        return user.id !== action.payload;
       });
       return {
-        users
+        ...state,
+        users: [...filteredUsers]
+      };
+    case ADD_NEW_USER:
+      return {
+        ...state,
+        users: [action.payload, ...state.users]
       };
     case SORT_USERS:
       let sortedUsers = state;
@@ -47,9 +54,8 @@ const usersReducer = (state = INITIAL_STATE, action) => {
           break;
       }
 
-      console.log(sortedUsers);
-
       return {
+        ...state,
         users: [...sortedUsers]
       };
     default: {
@@ -78,14 +84,6 @@ export const searchUsers = (text) => {
   };
 };
 
-export const deleteUser = (id) => {
-  return (dispatch) => {
-    axios.delete(`https://dummyjson.com/users/${id}`).then((resp) => {
-      dispatch(setDeleteUser(resp.data));
-    });
-  };
-};
-
 export const setUsers = (users) => {
   return {
     type: SET_USERS,
@@ -93,10 +91,10 @@ export const setUsers = (users) => {
   };
 };
 
-export const setDeleteUser = (user) => {
+export const deleteUser = (id) => {
   return {
     type: SET_DELETE_USER,
-    payload: user
+    payload: id
   };
 };
 
@@ -104,5 +102,12 @@ export const sortUsers = (sortBy) => {
   return {
     type: SORT_USERS,
     payload: sortBy
+  };
+};
+
+export const addNewUser = (user) => {
+  return {
+    type: ADD_NEW_USER,
+    payload: user
   };
 };

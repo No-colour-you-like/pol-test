@@ -7,7 +7,7 @@ export const Header = () => {
     <header className="mb-3">
       <Navbar expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand>Полати - тестовое задание</Navbar.Brand>
+          <Navbar.Brand>Тестовое задание</Navbar.Brand>
           <Nav className="me-auto">
             <Link to="/" className="mx-3">
               <Button>Главная</Button>

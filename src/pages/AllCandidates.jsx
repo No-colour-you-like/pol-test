@@ -100,17 +100,24 @@ const AllCandidates = (props) => {
           ))}
         </tbody>
       </Table>
-      <div className="d-flex justify-content-center">
-        <Pagination>
-          <Pagination.First onClick={() => setPage(1)} />
-          {pages.map((number) => (
-            <Pagination.Item key={number} onClick={() => setPage(number)} active={number === page}>
-              {number}
-            </Pagination.Item>
-          ))}
-          <Pagination.Last onClick={() => setPage(5)} />
-        </Pagination>
-      </div>
+      {searchValue.length === 0 && (
+        <div className="d-flex justify-content-center">
+          <Pagination>
+            <Pagination.First onClick={() => setPage(1)} />
+            {pages.map((number) => (
+              <Pagination.Item
+                key={number}
+                onClick={() => setPage(number)}
+                active={number === page}
+              >
+                {number}
+              </Pagination.Item>
+            ))}
+            <Pagination.Last onClick={() => setPage(5)} />
+          </Pagination>
+        </div>
+      )}
+
       {isShowedPopup && <FormPopup closePopup={() => showFormPopup()} />}
     </>
   );
